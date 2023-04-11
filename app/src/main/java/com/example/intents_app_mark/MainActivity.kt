@@ -1,11 +1,15 @@
 package com.example.intents_app_mark
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import java.io.LineNumberReader
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,8 +48,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         camerabutton.setOnClickListener {
-            var takePictureintent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            val takePictureintent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(takePictureintent, 1)
+        }
+
+        sharebutton.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey its mark")
+            startActivity(shareIntent)
+        }
+
+        mpesabutton.setOnClickListener {
+            val simToolKitintent =applicationContext.packageManager.getLaunchIntentForPackage("com.android.stk")
+            simToolKitintent?.let { startActivity(it) }
+        }
+
+        callbutton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_CALL,)
+            if (ContextCompat.checkSelfPermission(
+                    this@MainActivity,
+                    android.Manifest.permission.CALL_PHONE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf<String>(android.Manifest.permission.CALL_PHONE),
+                    1
+                )
+            } else {
+
+
+            }
+
 
         }
 
