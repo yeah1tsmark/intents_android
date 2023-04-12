@@ -9,7 +9,6 @@ import android.provider.MediaStore
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.io.LineNumberReader
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharebutton: Button
     private lateinit var mpesabutton: Button
     private lateinit var callbutton: Button
+    private lateinit var websitebutton:Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         sharebutton = findViewById(R.id.btnshare)
         mpesabutton = findViewById(R.id.btnmpesa)
         callbutton = findViewById(R.id.btncall)
+        websitebutton = findViewById(R.id.btnweb)
 
 
         smsbutton.setOnClickListener {
@@ -65,8 +66,15 @@ class MainActivity : AppCompatActivity() {
             simToolKitintent?.let { startActivity(it) }
         }
 
+
+        websitebutton.setOnClickListener {
+            //Toast.makeText(this, "hurray", Toast.LENGTH_SHORT).show()
+            val gotowebsite = Intent(this, WebsiteActivity::class.java)
+            startActivity(gotowebsite)
+        }
+
         callbutton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_CALL,)
+            val intent = Intent(Intent.ACTION_CALL)
             if (ContextCompat.checkSelfPermission(
                     this@MainActivity,
                     android.Manifest.permission.CALL_PHONE
@@ -77,10 +85,15 @@ class MainActivity : AppCompatActivity() {
                     arrayOf<String>(android.Manifest.permission.CALL_PHONE),
                     1
                 )
-            } else {
-
-
+            } else{
+                startActivity(intent)
             }
+
+            // code to navigate from one activity to another
+
+
+
+
 
 
         }
